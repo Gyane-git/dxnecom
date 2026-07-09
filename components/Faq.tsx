@@ -9,44 +9,43 @@ interface FAQItem {
   answer: string;
 }
 
-// ── Data ──────────────────────────────────────────────────────────────────────
+// ── Default FAQs ──────────────────────────────────────────────────────────────
 const faqs: FAQItem[] = [
   {
     id: 1,
-    question: "What makes Nityagro products different from regular products?",
+    question: "What is DXN best known for?",
     answer:
-      "Nityagro sources all ingredients directly from trusted farmers, uses traditional extraction methods like wood-pressed and cold-pressed to retain maximum nutrients, and avoids any chemical additives or preservatives.",
+      "DXN is globally recognized for its Ganoderma-based health and wellness products, including beverages, nutritional supplements, personal care, and household products.",
   },
   {
     id: 2,
-    question: "Are Nityagro products 100% natural and organic?",
+    question: "Are DXN products made from natural ingredients?",
     answer:
-      "Yes, all Nityagro products are 100% natural and free from artificial additives. Our products go through 40+ lab tests to ensure purity and quality before reaching your hands.",
+      "Yes. DXN focuses on high-quality natural ingredients and follows strict manufacturing standards to ensure product quality, purity, and safety.",
   },
   {
     id: 3,
-    question:
-      "What is the difference between Wood Pressed and Cold Pressed oils?",
+    question: "What is Ganoderma and why is it used in DXN products?",
     answer:
-      "Wood pressed oils are extracted using a traditional wooden churner (ghani) at low speeds, preserving natural aroma and nutrients. Cold pressed oils use a modern steel expeller with controlled low heat. Both methods avoid chemicals, but wood pressed is the more traditional method.",
+      "Ganoderma is a traditional medicinal mushroom valued for its wellness benefits. DXN incorporates premium Ganoderma into many of its products to support a healthy lifestyle.",
   },
   {
     id: 4,
-    question: "How long does delivery take and what are the charges?",
+    question: "How long does delivery take?",
     answer:
-      "Delivery typically takes 3–7 business days depending on your location. We offer free delivery on orders above a certain amount. Please check the shipping policy page for the most up-to-date details.",
+      "Orders are usually delivered within 3–7 business days depending on your location. Delivery times may vary during holidays or promotional periods.",
   },
   {
     id: 5,
-    question: "Can I return a product if I'm not satisfied?",
+    question: "Can I return a product?",
     answer:
-      "Yes, we have a hassle-free return policy. If you're not satisfied with your purchase, you can request a return within 7 days of delivery. Please contact our support team to initiate the process.",
+      "Yes. If your product is damaged or incorrect, please contact our customer support. Returns are processed according to DXN's return policy.",
   },
 ];
 
 const INITIAL_VISIBLE = 5;
 
-// ── FAQ Item ──────────────────────────────────────────────────────────────────
+// ── FAQ Row ───────────────────────────────────────────────────────────────────
 function FAQRow({
   item,
   isOpen,
@@ -57,34 +56,36 @@ function FAQRow({
   onToggle: () => void;
 }) {
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between px-6 py-5 text-left cursor-pointer group"
+        className="w-full flex items-center justify-between px-6 py-5 text-left"
         aria-expanded={isOpen}
       >
         <span
-          className={`text-base font-medium leading-snug transition-colors ${
-            isOpen ? "text-[#2d7a4f] font-semibold" : "text-gray-800"
+          className={`text-base transition-colors ${
+            isOpen
+              ? "text-green-700 font-semibold"
+              : "text-slate-800 font-medium"
           }`}
         >
           {item.question}
         </span>
 
-        {/* +/− icon */}
-        <span className="ml-4 shrink-0 text-[#2d7a4f] text-2xl leading-none select-none">
+        <span className="ml-4 text-2xl text-green-700 font-light">
           {isOpen ? "−" : "+"}
         </span>
       </button>
 
-      {/* Answer — animated expand */}
       <div
-        className={`grid transition-all duration-300 ease-in-out ${
-          isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        className={`grid transition-all duration-300 ${
+          isOpen
+            ? "grid-rows-[1fr] opacity-100"
+            : "grid-rows-[0fr] opacity-0"
         }`}
       >
         <div className="overflow-hidden">
-          <p className="px-6 pb-6 text-sm text-gray-600 leading-relaxed">
+          <p className="px-6 pb-6 text-sm leading-7 text-slate-600">
             {item.answer}
           </p>
         </div>
@@ -93,9 +94,9 @@ function FAQRow({
   );
 }
 
-// ── Main Section ──────────────────────────────────────────────────────────────
+// ── Main FAQ Section ──────────────────────────────────────────────────────────
 export default function FAQ() {
-  const [openId, setOpenId] = useState<number | null>(null); // first open by default
+  const [openId, setOpenId] = useState<number | null>(1);
   const [showAll, setShowAll] = useState(false);
   const [apiFaqs, setApiFaqs] = useState<FAQItem[]>(faqs);
 
@@ -105,41 +106,55 @@ export default function FAQ() {
         const response = await fetch("/api/faqs?homeOnly=true&limit=5", {
           cache: "no-store",
         });
+
         const payload = await response.json();
+
         if (!response.ok || !payload?.success) return;
+
         const rows = Array.isArray(payload.data) ? payload.data : [];
+
         if (!rows.length) return;
+
         setApiFaqs(
           rows.slice(0, 5).map((item: any) => ({
             id: Number(item.id || item.faqsId),
             question: item.question,
             answer: item.answer || "",
-          })),
+          }))
         );
       } catch {
-        // Static FAQs remain as fallback.
+        // fallback
       }
     };
 
     loadFaqs();
   }, []);
 
-  const visibleFaqs = showAll ? apiFaqs : apiFaqs.slice(0, INITIAL_VISIBLE);
+  const visibleFaqs = showAll
+    ? apiFaqs
+    : apiFaqs.slice(0, INITIAL_VISIBLE);
 
-  const toggle = (id: number) => setOpenId((prev) => (prev === id ? null : id));
+  const toggle = (id: number) =>
+    setOpenId((prev) => (prev === id ? null : id));
 
   return (
-    <section className="bg-white py-6 px-4 sm:px-8 lg:px-16">
+    <section className="bg-white py-12 px-4 sm:px-8 lg:px-16">
       {/* Heading */}
-      <h1
-        className="text-center font-bold text-[32px] leading-[38.4px] tracking-[0.6px] text-[#235A49] mb-10"
-        style={{ fontFamily: "Roboto Slab" }}
-      >
-        Frequently Asked Questions
-      </h1>
+      <div className="text-center mb-12">
+        <h2
+          className="text-3xl lg:text-4xl font-bold text-green-700"
+          style={{ fontFamily: "Roboto Slab" }}
+        >
+          Frequently Asked Questions
+        </h2>
+
+        <p className="mt-3 text-slate-600 text-lg">
+          Everything you need to know about DXN products and services.
+        </p>
+      </div>
 
       {/* FAQ List */}
-      <div className="max-w-4xl mx-auto flex flex-col gap-4">
+      <div className="max-w-4xl mx-auto space-y-4">
         {visibleFaqs.map((item) => (
           <FAQRow
             key={item.id}
@@ -150,12 +165,12 @@ export default function FAQ() {
         ))}
       </div>
 
-      {/* See More Button */}
+      {/* Button */}
       {apiFaqs.length > INITIAL_VISIBLE && (
         <div className="flex justify-center mt-10">
           <button
-            onClick={() => setShowAll((v) => !v)}
-            className="px-10 py-3 border border-gray-300 rounded-lg text-sm font-semibold text-[#1e5631] bg-white hover:bg-gray-50 transition-colors"
+            onClick={() => setShowAll((prev) => !prev)}
+            className="px-8 py-3 rounded-lg bg-green-700 hover:bg-green-800 text-white font-semibold transition-all duration-300"
           >
             {showAll ? "See Less" : "See More"}
           </button>
