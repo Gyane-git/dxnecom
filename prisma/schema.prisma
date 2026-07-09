@@ -1,0 +1,606 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  userId             BigInt              @id @default(autoincrement())
+  name               String
+  email              String              @unique
+  role               String
+  rolePermission     String?
+  status             Boolean             @default(false)
+  password           String
+  phone              String?
+  city               String?
+  state              String?
+  zipCode            String?
+  country            String?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  address            Address[]
+  auditLog           AuditLog[]
+  cartListers        CartList[]
+  categories         Categories[]
+  comboOrders        ComboOrders[]
+  comboCancellations ComboOrderCancellation[]
+  comboReturns       ComboOrderReturn[]
+  orderCancellations OrderCancellation[]
+  orderReturns       OrderReturn[]
+  orders             Orders[]
+  paymentDetails     PaymentDetails[]
+  productReview      ProductReview[]
+  products           Products[]
+  setShippingCost    SetShippingCost[]
+  testimonials       Testimonials[]
+  wishlist           Wishlist[]
+
+  @@map("users")
+}
+
+model AuthOtp {
+  authOtpId BigInt   @id @default(autoincrement())
+  email     String
+  purpose   String
+  codeHash  String
+  expiresAt DateTime
+  consumed  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email, purpose])
+  @@map("authOtp")
+}
+
+model Categories {
+  categoryId          BigInt   @id @default(autoincrement())
+  categoryName        String
+  userId              BigInt
+  slug                String?
+  categoryDescription String?
+  categoryImage       String?
+  categoryLogo        String?
+  categoryBanner      String?
+  categoryStatus      Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  user                Users    @relation(fields: [userId], references: [userId])
+
+  @@index([userId], map: "categories_userId_fkey")
+  @@map("categories")
+}
+
+model Products {
+  productId          BigInt              @id @default(autoincrement())
+  productCode        String              @unique
+  categoryId         String
+  userId             BigInt
+  productName        String
+  subGroupName       String?
+  slug               String?
+  productVariation   String?
+  productDescription String?             @db.LongText
+  nutritionInfo      String?             @db.LongText
+  cookingInstruction String?             @db.LongText
+  storageInstruction String?             @db.LongText
+  pImage             String?
+  productStatus      Boolean             @default(true)
+  actualPrice        Float
+  sellingPrice       Float
+  deliveryTargetDays BigInt?
+  stockQuantity      BigInt?
+  availableQuantity  BigInt?
+  flashSale          Boolean             @default(false)
+  specialOffer       Boolean             @default(false)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  cartLists          CartList[]
+  cancellations      OrderCancellation[]
+  returns            OrderReturn[]
+  orders             Orders[]
+  images             ProductImage[]
+  reviews            ProductReview[]
+  user               Users               @relation(fields: [userId], references: [userId])
+  shippingDetails    ShippingDetails[]
+  wishlists          Wishlist[]
+  comboProduct       ComboProduct[]
+
+  @@index([userId], map: "products_userId_fkey")
+  @@map("products")
+}
+
+model ComboProduct {
+  comboProductId   BigInt         @id @default(autoincrement())
+  comboCode        String
+  comboName        String
+  productId        BigInt
+  productCodes     String         @db.LongText
+  productPrices    Float
+  comboPrice       Float
+  discount         Float?
+  slug             String?
+  comboDescription String?        @db.LongText
+  comboStatus      Boolean        @default(true)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  product          Products       @relation(fields: [productId], references: [productId])
+  comboCancellations ComboOrderCancellation[]
+  comboOrders      ComboOrders[]
+  comboReturns     ComboOrderReturn[]
+  productImages    ProductImage[]
+
+  @@map("comboProduct")
+}
+
+model CartList {
+  cartId    BigInt   @id @default(autoincrement())
+  userId    BigInt
+  productId BigInt
+  quantity  BigInt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   Products @relation(fields: [productId], references: [productId])
+  users     Users    @relation(fields: [userId], references: [userId])
+
+  @@index([productId], map: "cartList_productId_fkey")
+  @@index([userId], map: "cartList_userId_fkey")
+  @@map("cartList")
+}
+
+model Wishlist {
+  wishId    BigInt   @id @default(autoincrement())
+  userId    BigInt
+  productId BigInt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  products  Products @relation(fields: [productId], references: [productId])
+  users     Users    @relation(fields: [userId], references: [userId])
+
+  @@index([productId], map: "wishlist_productId_fkey")
+  @@index([userId], map: "wishlist_userId_fkey")
+  @@map("wishlist")
+}
+
+model Orders {
+  orderId           BigInt              @id @default(autoincrement())
+  userId            BigInt
+  productId         BigInt
+  quantity          BigInt              @default(1)
+  unitPrice         Float               @default(0)
+  productTotal      Float               @default(0)
+  deliveryCharge    Float               @default(0)
+  totalAmount       Float
+  orderStatus       String?
+  paymentStatus     String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  deliveryDetails   DeliveryDetails[]
+  orderCancellation OrderCancellation[]
+  orderReturn       OrderReturn[]
+  product           Products            @relation(fields: [productId], references: [productId])
+  users             Users               @relation(fields: [userId], references: [userId])
+  paymentDetails    PaymentDetails[]
+  shippingDetails   ShippingDetails[]
+
+  @@index([productId], map: "orders_productId_fkey")
+  @@index([userId], map: "orders_userId_fkey")
+  @@map("orders")
+}
+
+model ComboOrders {
+  comboOrderId   BigInt       @id @default(autoincrement())
+  userId         BigInt
+  comboProductId BigInt
+  quantity       BigInt       @default(1)
+  unitPrice       Float        @default(0)
+  productTotal    Float        @default(0)
+  deliveryCharge  Float        @default(0)
+  totalAmount    Float
+  orderStatus    String?
+  paymentStatus  String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  cancellations  ComboOrderCancellation[]
+  comboProduct   ComboProduct @relation(fields: [comboProductId], references: [comboProductId])
+  returns        ComboOrderReturn[]
+  users          Users        @relation(fields: [userId], references: [userId])
+
+  @@index([comboProductId], map: "comboOrders_comboProductId_fkey")
+  @@index([userId], map: "comboOrders_userId_fkey")
+  @@map("comboOrders")
+}
+
+model ComboOrderCancellation {
+  comboOrderCancellationId BigInt       @id @default(autoincrement())
+  comboOrderId             BigInt
+  userId                   BigInt
+  comboProductId           BigInt
+  comboName                String?
+  comboItems               String?
+  cancellationReason       String?
+  adminCancellationReason  String?
+  cancellationStatus       Boolean      @default(true)
+  createdAt                DateTime     @default(now())
+  updatedAt                DateTime     @updatedAt
+  comboOrder               ComboOrders  @relation(fields: [comboOrderId], references: [comboOrderId])
+  comboProduct             ComboProduct @relation(fields: [comboProductId], references: [comboProductId])
+  users                    Users        @relation(fields: [userId], references: [userId])
+
+  @@index([comboOrderId], map: "comboOrderCancellation_comboOrderId_fkey")
+  @@index([comboProductId], map: "comboOrderCancellation_comboProductId_fkey")
+  @@index([userId], map: "comboOrderCancellation_userId_fkey")
+  @@map("comboOrderCancellation")
+}
+
+model ComboOrderReturn {
+  comboOrderReturnId BigInt       @id @default(autoincrement())
+  comboOrderId       BigInt
+  userId             BigInt
+  comboProductId     BigInt
+  comboName          String?
+  comboItems         String?
+  reason             String?
+  returnImage        String?
+  returnStatus       Boolean      @default(true)
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+  comboOrder         ComboOrders  @relation(fields: [comboOrderId], references: [comboOrderId])
+  comboProduct       ComboProduct @relation(fields: [comboProductId], references: [comboProductId])
+  users              Users        @relation(fields: [userId], references: [userId])
+
+  @@index([comboOrderId], map: "comboOrderReturn_comboOrderId_fkey")
+  @@index([comboProductId], map: "comboOrderReturn_comboProductId_fkey")
+  @@index([userId], map: "comboOrderReturn_userId_fkey")
+  @@map("comboOrderReturn")
+}
+
+model OmsOrderSyncLog {
+  omsOrderSyncLogId BigInt   @id @default(autoincrement())
+  orderType         String
+  localOrderIds     String?
+  status            String   @default("PENDING")
+  attempts          Int      @default(0)
+  payload           Json
+  response          Json?
+  errorMessage      String?  @db.Text
+  lastTriedAt       DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([status])
+  @@map("omsOrderSyncLog")
+}
+
+model Banner {
+  bannerId             BigInt   @id @default(autoincrement())
+  bannerName           String
+  slug                 String?
+  bannerDescription    String?
+  bannerImageforWeb    String?
+  bannerImageforMobile String?
+  cardImage            String?
+  bannerStatus         Boolean  @default(true)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@map("banner")
+}
+
+model Faqs {
+  faqsId     BigInt   @id @default(autoincrement())
+  question   String   @db.Text
+  answer     String?  @db.Text
+  faqSection String   @default("products-quality")
+  showOnHome Boolean  @default(false)
+  sortOrder  BigInt   @default(0)
+  faqStatus  Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("faqs")
+}
+
+model ContactSettings {
+  id              BigInt   @id @default(autoincrement())
+  customerName    String
+  customerEmail   String?
+  customerMessage String?
+  customerPhone   String?
+  mapUrl          String?
+  whatsappNumber  String?
+  companyAddress  String?
+  companyEmail    String?
+  companyPhone    String?
+  facebookUrl     String?
+  twitterUrl      String?
+  instagramUrl    String?
+  tikTokUrl       String?
+  contactStatus   Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("contactSettings")
+}
+
+model Testimonials {
+  testimonialsId    BigInt   @id @default(autoincrement())
+  name              String
+  userId            BigInt
+  title             String?
+  message           String?  @db.Text
+  image             String?
+  designation       String?
+  starRating        BigInt?
+  testimonialStatus Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  users             Users    @relation(fields: [userId], references: [userId])
+
+  @@index([userId], map: "testimonials_userId_fkey")
+  @@map("testimonials")
+}
+
+model PopupBanner {
+  popupBannerId    BigInt   @id @default(autoincrement())
+  popupName        String?
+  popupDescription String?
+  popupImage       String?
+  popupStatus      Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("popupBanner")
+}
+
+model CompanyInfo {
+  companyInfoId      BigInt   @id @default(autoincrement())
+  privacyPolicy      String
+  companyInfo        String?
+  companyDescription String?
+  termConditions     String?
+  returnPolicy       String?
+  shippingPolicy     String?
+  companyImage       String?
+  companyMission     String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@map("companyInfo")
+}
+
+model ProductReview {
+  productReviewId    BigInt   @id @default(autoincrement())
+  productId          BigInt
+  userId             BigInt
+  rating             BigInt
+  review             String?
+  productReviewImage String?
+  reviewStatus       Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  product            Products @relation(fields: [productId], references: [productId])
+  users              Users    @relation(fields: [userId], references: [userId])
+
+  @@index([productId], map: "productReview_productId_fkey")
+  @@index([userId], map: "productReview_userId_fkey")
+  @@map("productReview")
+}
+
+model OrderReturn {
+  orderReturnId BigInt   @id @default(autoincrement())
+  orderId       BigInt
+  userId        BigInt
+  productId     BigInt
+  reason        String?
+  returnImage   String?
+  returnStatus  Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  orders        Orders   @relation(fields: [orderId], references: [orderId])
+  product       Products @relation(fields: [productId], references: [productId])
+  users         Users    @relation(fields: [userId], references: [userId])
+
+  @@index([orderId], map: "orderReturn_orderId_fkey")
+  @@index([productId], map: "orderReturn_productId_fkey")
+  @@index([userId], map: "orderReturn_userId_fkey")
+  @@map("orderReturn")
+}
+
+model OrderCancellation {
+  orderCancellationId     BigInt   @id @default(autoincrement())
+  orderId                 BigInt
+  userId                  BigInt
+  productId               BigInt
+  adminCancellationReason String?
+  cancellationReason      String?
+  cancellationImage       String?
+  cancellationStatus      Boolean  @default(true)
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+  orders                  Orders   @relation(fields: [orderId], references: [orderId])
+  product                 Products @relation(fields: [productId], references: [productId])
+  users                   Users    @relation(fields: [userId], references: [userId])
+
+  @@index([orderId], map: "orderCancellation_orderId_fkey")
+  @@index([productId], map: "orderCancellation_productId_fkey")
+  @@index([userId], map: "orderCancellation_userId_fkey")
+  @@map("orderCancellation")
+}
+
+model NewsletterSubscription {
+  newsletterSubscriptionId BigInt   @id @default(autoincrement())
+  email                    String   @unique
+  subscriptionStatus       Boolean  @default(true)
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+
+  @@map("newsletterSubscription")
+}
+
+model PromoCode {
+  promoCodeId        BigInt   @id @default(autoincrement())
+  code               String   @unique
+  discountPercentage Float
+  validFrom          DateTime
+  validTo            DateTime
+  promoStatus        Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@map("promoCode")
+}
+
+model ShippingDetails {
+  shippingDetailsId BigInt            @id @default(autoincrement())
+  orderId           BigInt
+  productId         BigInt
+  shippingCourier   String?
+  trackingNumber    String?
+  shippingDate      DateTime?
+  shippingRemark    String?
+  shippingStatus    String?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  deliveryDetails   DeliveryDetails[]
+  orders            Orders            @relation(fields: [orderId], references: [orderId])
+  product           Products          @relation(fields: [productId], references: [productId])
+
+  @@index([orderId], map: "shippingDetails_orderId_fkey")
+  @@index([productId], map: "shippingDetails_productId_fkey")
+  @@map("shippingDetails")
+}
+
+model DeliveryDetails {
+  deliveryDetailsId BigInt          @id @default(autoincrement())
+  orderId           BigInt
+  shippingDetailsId BigInt
+  deliveryDate      DateTime?
+  paymentMode       String?
+  transactionId     String?
+  trackingNumber    String?
+  deliveryStatus    String?
+  deliveryRemark    String?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  orders            Orders          @relation(fields: [orderId], references: [orderId])
+  shippingDetails   ShippingDetails @relation(fields: [shippingDetailsId], references: [shippingDetailsId])
+
+  @@index([orderId], map: "deliveryDetails_orderId_fkey")
+  @@index([shippingDetailsId], map: "deliveryDetails_shippingDetailsId_fkey")
+  @@map("deliveryDetails")
+}
+
+model PaymentDetails {
+  paymentDetailsId BigInt    @id @default(autoincrement())
+  orderId          BigInt
+  userId           BigInt
+  paymentMode      String?
+  paymentAmount    Float?
+  paymentDate      DateTime?
+  transactionId    String?
+  paymentStatus    String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  orders           Orders    @relation(fields: [orderId], references: [orderId])
+  users            Users     @relation(fields: [userId], references: [userId])
+
+  @@index([orderId], map: "paymentDetails_orderId_fkey")
+  @@index([userId], map: "paymentDetails_userId_fkey")
+  @@map("paymentDetails")
+}
+
+model Inquiry {
+  inquiryId     BigInt   @id @default(autoincrement())
+  name          String
+  email         String
+  phone         String?
+  subject       String?
+  message       String?
+  inquiryStatus Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("inquiry")
+}
+
+model ProductImage {
+  productImageId BigInt        @id @default(autoincrement())
+  productId      BigInt?
+  comboProductId BigInt?
+  imageUrl       String
+  isMain         Boolean       @default(false)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  products       Products?     @relation(fields: [productId], references: [productId])
+  comboProduct   ComboProduct? @relation(fields: [comboProductId], references: [comboProductId])
+
+  @@index([productId])
+  @@index([comboProductId])
+}
+
+model ProductVariant {
+  variantId     BigInt   @id @default(autoincrement())
+  pCode         String
+  subGroupName  String
+  variationName String
+  salesRate     Float?
+  stockQuantity BigInt?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("productVariant")
+}
+
+model SetShippingCost {
+  setShippingCostId BigInt   @id @default(autoincrement())
+  userId            BigInt
+  minOrderAmount    Float
+  maxOrderAmount    Float
+  shippingAdress    String?
+  shippingMethod    String?
+  shippingCost      Float
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  users             Users    @relation(fields: [userId], references: [userId])
+
+  @@index([userId], map: "setShippingCost_userId_fkey")
+  @@map("setShippingCost")
+}
+
+model Address {
+  addressId BigInt   @id @default(autoincrement())
+  userId    BigInt
+  province  String
+  district  String
+  city      String
+  ward      String
+  locality  String?
+  zipCode   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  addType   String
+  email     String?
+  fullName  String
+  phone     String
+  users     Users    @relation(fields: [userId], references: [userId])
+
+  @@index([userId], map: "address_userId_fkey")
+  @@map("address")
+}
+
+model AuditLog {
+  auditLogId  BigInt   @id @default(autoincrement())
+  userId      BigInt
+  action      String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  users       Users    @relation(fields: [userId], references: [userId])
+
+  @@index([userId], map: "auditLog_userId_fkey")
+  @@map("auditLog")
+}
