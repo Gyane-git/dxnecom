@@ -381,7 +381,7 @@ export default function Header() {
                          rounded-xl bg-white ring-1 ring-[#EAEFEC] shadow-sm overflow-hidden shrink-0
                          group-hover:ring-[#266A3F]/40 transition-colors duration-200"
             >
-              <Image src="/dxnlogo.jpg" alt="DXN Nepal" fill className="object-contain p-1" />
+              <Image src="/dxnlogo-removebg-preview.png" alt="DXN Nepal" fill className="object-contain p-1" />
             </span>
             <span className="hidden xs:flex flex-col leading-none">
               <span className="text-[17px] sm:text-[19px] font-extrabold tracking-tight text-[#00462C]">

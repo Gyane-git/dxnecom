@@ -4,12 +4,12 @@ import LayoutWrapper from "@/components/LayoutWrapper";
 
 export const metadata: Metadata = {
   title: {
-    default: "Nityagro",
-    template: "%s | Nityagro",
+    default: "DXN Nepal",
+    template: "%s | DXN Nepal",
   },
-  description: "Official Nityagro store.",
+  description: "Official DXN Nepal store.",
 
-  applicationName: "Nityagro",
+  applicationName: "DXN Nepal",
 
   metadataBase: new URL("https://nityagro.com"),
 
@@ -19,18 +19,18 @@ export const metadata: Metadata = {
   // },
 
   openGraph: {
-    title: "Nityagro",
-    description: "Explore Nityagro's official store for premium agricultural products. Discover a wide range of high-quality seeds, fertilizers, and farming tools designed to boost your agricultural success. Shop now for the best in farming essentials.",
+    title: "DXN Nepal",
+    description: "Explore DXN Nepal's official store for premium agricultural products. Discover a wide range of high-quality seeds, fertilizers, and farming tools designed to boost your agricultural success. Shop now for the best in farming essentials.",
     url: "https://nityagro.com",
-    siteName: "Nityagro",
+    siteName: "DXN Nepal",
     locale: "en_US",
     type: "website",
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Nityagro",
-    description: "Official Nityagro store.",
+    title: "DXN Nepal",
+    description: "Official DXN Nepal store.",
   },
 };
 
