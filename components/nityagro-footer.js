@@ -153,7 +153,7 @@ export default function Footer() {
   return (
     <>
       {/* ── DESKTOP FOOTER (md and above) ── */}
-     <div className="relative w-full min-h-[450px] lg:min-h-[910px] overflow-hidden">
+     <div className="relative w-full min-h-[430px] lg:min-h-[720px] overflow-hidden">
   {/* Background Image */}
   <Image
     src="/footer.webp"
@@ -167,8 +167,8 @@ export default function Footer() {
   <div className="absolute inset-0 bg-black/55" />
 
   {/* Content */}
-  <div className="absolute inset-0 z-10 flex items-end">
-    <div className="w-full pt-32 lg:pt-48">
+  <div className="absolute inset-0 z-15 flex items-end">
+    <div className="w-full pb-30 lg:pt-48">
       <div className="mx-auto max-w-[1220px] px-6 lg:px-8">
         <div className="p-5">
 
