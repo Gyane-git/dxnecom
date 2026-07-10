@@ -123,7 +123,7 @@ const CUSTOMER_SUPPORT = [
 ];
 
 const COMPANY = [
-  { label: "About Nityagro", href: "/about" },
+  { label: "About DXN Nepal", href: "/about" },
   
   { label: "Contact Us", href: "/contact-us" },
 ];
@@ -203,7 +203,7 @@ export default function Footer() {
                   className="flex items-center gap-3 hover:text-green-300 transition-colors"
                 >
                   <MailIcon size={18} />
-                  <span className="text-sm">sale@nityagro.com</span>
+                  <span className="text-sm">sale@ndxn-nepal.com</span>
                 </a>
               </div>
             </div>
@@ -282,7 +282,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-5 py-6">
 
             <p className="text-white text-sm drop-shadow">
-              © {new Date().getFullYear()} Nityagro. All Rights Reserved.
+              © {new Date().getFullYear()} DXN Nepal. All Rights Reserved.
             </p>
 
             <div className="flex items-center gap-4">
