@@ -61,19 +61,19 @@ export default function ImageSlider({ slides = DEFAULT_SLIDES, gap = 16 }) {
   );
 
   return (
-    <div className="flex flex-col items-center gap-5 w-full px-2 sm:px-4 mt-6 sm:mt-8 md:mt-10 lg:mt-12">
-      <div className="relative w-full overflow-hidden mt-10">
+    <div className="flex flex-col items-center gap-5 w-full bg-white px-2 sm:px-4 mt-6 sm:mt-8 md:mt-10 lg:mt-12">
+      <div className="relative w-full overflow-hidden my-10">
         <div className="flex h-full gap-4">
           {fixedSlides.map((slide, i) => (
             <div
               key={`${slide.src}-${i}`}
-              className="flex-1 relative overflow-hidden rounded-md lg:rounded-md aspect-[442/213]"
+              className="flex-1 relative overflow-hidden lg:rounded-md aspect-[442/213]"
             >
               <Image
                 src={slide.src}
                 alt={slide.alt || ""}
                 fill
-                className="object-contain"
+                className="object-cover rounded-lg"
                 sizes="(max-width: 768px) 100vw, 33vw"
                 priority={i < 3}
                 unoptimized={slide.src?.startsWith("/banners/")}

@@ -52,14 +52,14 @@ export default function WhyChooseDXN() {
         {/* Header */}
         <div className="text-center mb-12">
           <h2
-            className="text-3xl lg:text-4xl font-bold text-green-700"
+            className="text-3xl lg:text-4xl font-bold text-[#1E2DD8] mb-3"
             style={{ fontFamily: "Roboto Slab" }}
           >
             Why Choose DXN?
           </h2>
 
           <p
-            className="mt-3 text-lg lg:text-2xl text-slate-600"
+            className="mt-3 text-lg lg:text-2xl text-[#000000]"
             style={{ fontFamily: "Roboto Slab" }}
           >
             Natural Wellness. Trusted Worldwide.
@@ -71,11 +71,11 @@ export default function WhyChooseDXN() {
           {features.map((feature) => (
             <div
               key={feature.id}
-              className="bg-white border border-slate-200 rounded-xl p-6 text-center transition-all duration-300 hover:shadow-xl hover:border-green-300 hover:-translate-y-1"
+              className="bg-gradient-to-r from-[#1E2DD8] to-[#40a557] border-2 border-blue-200 rounded-xl p-6 text-center transition-all duration-300 hover:shadow-xl hover:border-green-300 hover:-translate-y-1"
             >
               {/* Icon */}
-              <div className="flex justify-center mb-5">
-                <div className="w-20 h-20 rounded-full bg-green-50 flex items-center justify-center">
+              <div className="flex justify-center mb-5 ">
+                <div className="w-20 h-20 rounded-full bg-[#858bcf] flex items-center justify-center">
                   <Image
                     src={feature.icon}
                     alt={feature.alt}
@@ -87,12 +87,12 @@ export default function WhyChooseDXN() {
               </div>
 
               {/* Title */}
-              <h3 className="text-lg font-semibold text-slate-900 mb-3">
+              <h3 className="text-lg font-semibold text-[#000000] mb-3">
                 {feature.title}
               </h3>
 
               {/* Description */}
-              <p className="text-sm leading-7 text-slate-600">
+              <p className="text-sm leading-7 text-[#FFFFFF]">
                 {feature.description}
               </p>
             </div>

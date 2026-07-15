@@ -144,7 +144,7 @@ function ProductCard({ product }) {
       {/* Wishlist */}
       <button
         onClick={handleWishlistToggle}
-        className="absolute top-2 right-2 z-20 w-8 h-8 rounded-full bg-white border border-slate-200 text-slate-500 hover:bg-green-50 hover:text-green-700 transition-all duration-300 flex items-center justify-center"
+        className="absolute top-2 right-2 z-20 w-8 h-8 rounded-full bg-white border border-slate-200 text-slate-500 hover:bg-blue-200 hover:text-[#1E2DD8] transition-all duration-300 flex items-center justify-center"
         title={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
         aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
       >
@@ -154,7 +154,7 @@ function ProductCard({ product }) {
       {/* Discount */}
       {product.discount && (
         <div
-          className="absolute top-0 left-0 z-10 bg-green-700 text-white font-bold text-center"
+          className="absolute top-0 left-0 z-10 bg-[#E53935] text-white font-bold text-center"
           style={{
             width: "48px",
             minHeight: "54px",
@@ -170,7 +170,7 @@ function ProductCard({ product }) {
 
       {/* Badge */}
       {product.badge && (
-        <div className="absolute top-2.5 right-10 z-10 bg-amber-500 text-white px-2 py-1 rounded-l-md text-[10px] font-medium">
+        <div className="absolute top-2.5 right-10 z-10 bg-[#DC2626] text-white px-2 py-1 rounded-l-md text-[10px] font-medium">
           {product.badge}
         </div>
       )}
@@ -196,7 +196,7 @@ function ProductCard({ product }) {
             {product.name}
           </p>
 
-          <p className="mt-2 text-lg font-bold text-green-700">
+          <p className="mt-2 text-lg font-bold text-[#1E2DD8]">
             NPR {product.price}
           </p>
         </div>
@@ -209,7 +209,7 @@ function ProductCard({ product }) {
           className={`w-full py-2.5 rounded-lg text-white font-semibold flex items-center justify-center gap-2 text-sm transition-all duration-300 ${
             added
               ? "bg-green-800"
-              : "bg-green-700 hover:bg-green-800 active:scale-95"
+              : "bg-[#1E2DD8] hover:bg-[#1523B8] active:scale-95"
           }`}
         >
           <CartIcon />
@@ -322,13 +322,13 @@ export default function ProductSection() {
           {/* ── Welcome Header ── */}
           <div className="flex flex-col items-center text-center pt-8 sm:pt-10 lg:pt-11.25 pb-2 gap-1 px-4">
             <h1
-              className="font-bold text-xl sm:text-2xl lg:text-[32px] leading-9.5 tracking-[0.6px] text-slate-900"
+              className="font-bold text-xl sm:text-2xl lg:text-[32px] leading-9.5 tracking-[0.6px] text-[#1F2937]"
               style={{ fontFamily: "Roboto Slab" }}
             >
               Welcome To DXN!
             </h1>
             <p
-              className="font-normal text-sm sm:text-lg lg:text-[32px] leading-tight tracking-[0.6px] text-slate-700"
+              className="font-normal text-sm sm:text-lg lg:text-[32px] leading-tight tracking-[0.6px] text-[#4B5563]"
               style={{ fontFamily: "Roboto Slab" }}
             >
               Explore Authentic DXN Wellness Products.
@@ -359,7 +359,7 @@ export default function ProductSection() {
                     <span
                       className="text-xs font-medium mt-1 font-figtree"
                       style={{
-                        color: isActive ? "#15803D" : "#64748B",
+                        color: isActive ? "#1E2DD8" : "#64748B",
                         lineHeight: "16px",
                         letterSpacing: "0.2px",
                         transition: "all 0.3s ease",
@@ -375,7 +375,7 @@ export default function ProductSection() {
                     style={{
                       height: "2.5px",
                       width: isActive ? "100%" : "0%",
-                      background: "#15803D",
+                      background: "#1E2DD8",
                       borderRadius: "999px",
                     }}
                   />
@@ -387,7 +387,7 @@ export default function ProductSection() {
           {/* ── Title Row ── */}
           <div className="w-full max-w-340 h-102 flex flex-col">
             <div className="flex items-center justify-between mt-4 mb-3 px-4">
-              <h2 className="font-bold text-lg sm:text-xl lg:text-[22px] text-green-700">
+              <h2 className="font-bold text-lg sm:text-xl lg:text-[22px] text-[#1E2DD8]">
                 {activeCategory === "all"
                   ? "All Products"
                   : activeCategoryLabel}
@@ -395,7 +395,7 @@ export default function ProductSection() {
 
               <Link
                 href="/products"
-                className="font-semibold text-sm text-green-700 hover:text-green-800 hover:underline transition-colors duration-300"
+                className="relative inline-block font-semibold text-sm text-[#1E2DD8] hover:text-[#1E2DD8] transition-colors duration-300 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-[#1E2DD8] after:transition-transform after:duration-300 after:ease-in-out hover:after:scale-x-100"
               >
                 View All
               </Link>
@@ -424,9 +424,28 @@ export default function ProductSection() {
                 </div>
               </>
             ) : (
-              <p className="text-slate-500 text-sm py-10 w-full text-center px-4">
-                No products in this category yet.
-              </p>
+              <div className="flex flex-col items-center justify-center py-14 px-6 text-center rounded-2xl bg-gradient-to-br from-[#F8FAFF] to-white border border-gray-200 shadow-sm">
+                <div className="flex items-center justify-center w-20 h-20 rounded-full bg-[#EEF2FF]">
+                  <span className="text-4xl">📦</span>
+                </div>
+
+                <h3 className="mt-5 text-2xl font-bold text-[#1E2DD8]">
+                  No Products Found
+                </h3>
+
+                <p className="mt-2 max-w-md text-sm text-gray-600 leading-6">
+                  We couldn't find any products in this category right now.
+                  Please explore other categories or check back soon for new
+                  arrivals.
+                </p>
+
+                <button
+                  onClick={() => setActiveCategory("all")}
+                  className="mt-6 rounded-xl bg-[#1E2DD8] px-6 py-3 font-semibold text-white transition-all duration-300 hover:bg-[#1523B8] hover:scale-105 shadow-lg"
+                >
+                  View All Products
+                </button>
+              </div>
             )}
           </div>
         </div>
