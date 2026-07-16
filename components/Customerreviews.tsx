@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
+import { MoveRight, MoveLeft } from "lucide-react";
+
 // ── Types ─────────────────────────────────────────────────────────────
 interface Review {
   id: number;
@@ -77,9 +79,9 @@ function StarRating({ rating }: { rating: number }) {
 // ── Review Card ───────────────────────────────────────────────────────
 function ReviewCard({ review }: { review: Review }) {
   return (
-    <div className="flex flex-col sm:flex-row bg-white rounded-lg border shadow-sm overflow-hidden w-full min-w-0">
+    <div className="flex flex-col sm:flex-row bg-gradient-to-r from-[#7fc7db] to-[#e99e9e] rounded-lg border-2 border-blue-400 shadow-lg overflow-hidden w-full min-w-0">
       {/* Image */}
-      <div className="relative w-full h-56 sm:w-44 sm:h-auto overflow-hidden shrink-0">
+      <div className="relative w-full h-56 sm:w-44 sm:h-auto overflow-hidden shrink-0 ">
         <Image
           src={review.image}
           alt={review.name}
@@ -92,16 +94,20 @@ function ReviewCard({ review }: { review: Review }) {
       {/* Content */}
       <div className="flex flex-col justify-between p-4 sm:p-6 gap-3 flex-1 min-w-0">
         <div className="space-y-2">
-          <h3 className="text-base font-bold text-gray-900">{review.title}</h3>
+          <h3 className="text-base font-bold text-[#1E2DD8]">{review.title}</h3>
 
           <StarRating rating={review.rating} />
 
-          <p className="text-sm text-gray-600 leading-relaxed">{review.body}</p>
+          <p className="text-sm text-[#000000] leading-relaxed">
+            {review.body}
+          </p>
         </div>
 
         <div>
-          <p className="text-sm font-bold">{review.name}</p>
-          <p className="text-xs text-gray-400">{review.timeAgo}</p>
+          <p className="text-normal font-bold">{review.name}</p>
+          <p className="text-xs text-[#fcfcfc] tracking-widest">
+            {review.timeAgo}
+          </p>
         </div>
       </div>
     </div>
@@ -183,13 +189,13 @@ export default function CustomerReviews() {
       <div className="max-w-6xl mx-auto flex items-center gap-3 sm:gap-4">
         {/* Left Button (hidden on mobile) */}
         <button
-          className="hidden sm:flex w-10 h-10 items-center justify-center border rounded-full"
+          className="hidden sm:flex w-10 h-10 items-center justify-center text-[#1E2DD8] border-2 border-[#1E2DD8] rounded-full hover:bg-[#1E2DD8] hover:text-white"
           onClick={() => {
             setPage((p) => (p - 1 + totalPages) % totalPages);
             resetAutoSlide();
           }}
         >
-          ←
+          <MoveLeft className="text-[#1E2DD8] hover:text-white" />
         </button>
 
         {/* Cards */}
@@ -201,13 +207,13 @@ export default function CustomerReviews() {
 
         {/* Right Button (hidden on mobile) */}
         <button
-          className="hidden sm:flex w-10 h-10 items-center justify-center border rounded-full"
+          className="hidden sm:flex w-10 h-10 items-center justify-center border-2 border-[#1E2DD8] rounded-full hover:bg-[#1E2DD8] "
           onClick={() => {
             setPage((p) => (p + 1) % totalPages);
             resetAutoSlide();
           }}
         >
-          →
+          <MoveRight className="text-[#1E2DD8] hover:text-white" />
         </button>
       </div>
 
@@ -221,7 +227,7 @@ export default function CustomerReviews() {
               resetAutoSlide();
             }}
             className={`h-2 rounded-full transition-all ${
-              i === page ? "w-4 bg-[#2d7a4f]" : "w-2 bg-gray-300"
+              i === page ? "w-4 bg-[#3765ab]" : "w-2 bg-gray-300"
             }`}
           />
         ))}

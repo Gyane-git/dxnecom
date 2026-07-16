@@ -124,7 +124,7 @@ const CUSTOMER_SUPPORT = [
 
 const COMPANY = [
   { label: "About DXN Nepal", href: "/about" },
-  
+
   { label: "Contact Us", href: "/contact-us" },
 ];
 
@@ -153,185 +153,177 @@ export default function Footer() {
   return (
     <>
       {/* ── DESKTOP FOOTER (md and above) ── */}
-     <div className="relative w-full min-h-[430px] lg:min-h-[720px] overflow-hidden">
-  {/* Background Image */}
-  <Image
-    src="/footer.webp"
-    alt="Footer Background"
-    fill
-    priority
-    className="object-cover object-center scale-105 blur-[2px]"
-  />
+      <div className="relative w-full min-h-[430px] lg:min-h-[720px] overflow-hidden">
+        {/* Background Image */}
+        <Image
+          src="/footer.webp"
+          alt="Footer Background"
+          fill
+          priority
+          className="object-cover object-center scale-105 blur-[4px]"
+        />
 
-  {/* Dark Overlay */}
-  <div className="absolute inset-0 bg-black/55" />
+        {/* Bluish Overlay */}
+        <div className="absolute inset-0 bg-blue/50" />
 
-  {/* Content */}
-  <div className="absolute inset-0 z-15 flex items-end">
-    <div className="w-full pb-30 lg:pt-48">
-      <div className="mx-auto max-w-[1220px] px-6 lg:px-8">
-        <div className="p-5">
+        {/* Content */}
+        <div className="absolute inset-0 z-15 flex items-end">
+          <div className="w-full pb-30 lg:pt-48">
+            <div className="mx-auto max-w-[1220px] px-6 lg:px-8">
+              <div className="p-5">
+                {/* Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-10 pb-10">
+                  {/* GET IN TOUCH */}
+                  <div className="flex flex-col gap-5 max-w-xs">
+                    <h3
+                      className="text-white text-lg lg:text-xl font-semibold drop-shadow-lg"
+                      style={{ fontFamily: "Roboto, sans-serif" }}
+                    >
+                      GET IN TOUCH
+                    </h3>
 
-          {/* Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 pb-10">
+                    <p className="text-white text-sm leading-6 drop-shadow tracking-wide">
+                      Join our network of trusted partners and bring
+                      traditional, organic products to your community.
+                    </p>
 
-            {/* GET IN TOUCH */}
-            <div className="flex flex-col gap-5 max-w-xs">
-              <h3
-                className="text-white text-lg lg:text-xl font-semibold drop-shadow-lg"
-                style={{ fontFamily: "Roboto, sans-serif" }}
-              >
-                GET IN TOUCH
-              </h3>
+                    <div className="flex flex-col gap-3 text-white">
+                      <a
+                        href="tel:+915400025124553"
+                        className="flex items-center gap-3 hover:text-[#1E2DD8] transition-colors"
+                      >
+                        <PhoneIcon size={18} />
+                        <span className="text-sm">(+91)-540-025-124553</span>
+                      </a>
 
-              <p className="text-white/95 text-sm leading-6 drop-shadow">
-                Join our network of trusted partners and bring traditional,
-                organic products to your community.
-              </p>
+                      <a
+                        href="mailto:sale@nityagro.com"
+                        className="flex items-center gap-3 hover:text-[#1E2DD8] transition-colors"
+                      >
+                        <MailIcon size={18} />
+                        <span className="text-sm">sale@ndxn-nepal.com</span>
+                      </a>
+                    </div>
+                  </div>
 
-              <div className="flex flex-col gap-3 text-white">
-                <a
-                  href="tel:+915400025124553"
-                  className="flex items-center gap-3 hover:text-green-300 transition-colors"
-                >
-                  <PhoneIcon size={18} />
-                  <span className="text-sm">(+91)-540-025-124553</span>
-                </a>
+                  {/* Customer Support */}
+                  <div className="flex flex-col gap-5">
+                    <h3
+                      className="text-white text-lg lg:text-xl font-semibold drop-shadow-lg"
+                      style={{ fontFamily: "Roboto, sans-serif" }}
+                    >
+                      Customer Support
+                    </h3>
 
-                <a
-                  href="mailto:sale@nityagro.com"
-                  className="flex items-center gap-3 hover:text-green-300 transition-colors"
-                >
-                  <MailIcon size={18} />
-                  <span className="text-sm">sale@ndxn-nepal.com</span>
-                </a>
-              </div>
-            </div>
+                    <div className="flex flex-col gap-4">
+                      {CUSTOMER_SUPPORT.map((item) => (
+                        <a
+                          key={item.label}
+                          href={item.href}
+                          className="text-white/90 text-sm hover:text-[#1E2DD8] transition-colors"
+                        >
+                          {item.label}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
 
-            {/* Customer Support */}
-            <div className="flex flex-col gap-5">
-              <h3
-                className="text-white text-lg lg:text-xl font-semibold drop-shadow-lg"
-                style={{ fontFamily: "Roboto, sans-serif" }}
-              >
-                Customer Support
-              </h3>
+                  {/* Company */}
+                  <div className="flex flex-col gap-5">
+                    <h3
+                      className="text-white text-lg lg:text-xl font-semibold drop-shadow-lg"
+                      style={{ fontFamily: "Roboto, sans-serif" }}
+                    >
+                      Company
+                    </h3>
 
-              <div className="flex flex-col gap-4">
-                {CUSTOMER_SUPPORT.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className="text-white/90 text-sm hover:text-green-300 transition-colors"
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </div>
-            </div>
+                    <div className="flex flex-col gap-4">
+                      {COMPANY.map((item) => (
+                        <a
+                          key={item.label}
+                          href={item.href}
+                          className="text-white/90 text-sm hover:text-[#1E2DD8] transition-colors"
+                        >
+                          {item.label}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
 
-            {/* Company */}
-            <div className="flex flex-col gap-5">
-              <h3
-                className="text-white text-lg lg:text-xl font-semibold drop-shadow-lg"
-                style={{ fontFamily: "Roboto, sans-serif" }}
-              >
-                Company
-              </h3>
+                  {/* Legal */}
+                  <div className="flex flex-col gap-5">
+                    <h3
+                      className="text-white text-lg lg:text-xl font-semibold drop-shadow-lg"
+                      style={{ fontFamily: "Roboto, sans-serif" }}
+                    >
+                      Legal
+                    </h3>
 
-              <div className="flex flex-col gap-4">
-                {COMPANY.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className="text-white/90 text-sm hover:text-green-300 transition-colors"
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </div>
-            </div>
+                    <div className="flex flex-col gap-4">
+                      {LEGAL.map((item) => (
+                        <a
+                          key={item.label}
+                          href={item.href}
+                          className="text-white/90 text-sm hover:text-[#1E2DD8] transition-colors"
+                        >
+                          {item.label}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
 
-            {/* Legal */}
-            <div className="flex flex-col gap-5">
-              <h3
-                className="text-white text-lg lg:text-xl font-semibold drop-shadow-lg"
-                style={{ fontFamily: "Roboto, sans-serif" }}
-              >
-                Legal
-              </h3>
+                {/* Divider */}
+                <div className="border-t border-white/25" />
 
-              <div className="flex flex-col gap-4">
-                {LEGAL.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className="text-white/90 text-sm hover:text-green-300 transition-colors"
-                  >
-                    {item.label}
-                  </a>
-                ))}
+                {/* Bottom */}
+                <div className="flex flex-col md:flex-row items-center justify-between gap-5 py-6">
+                  <p className="text-white text-sm drop-shadow">
+                    © {new Date().getFullYear()} DXN Nepal. All Rights Reserved.
+                  </p>
+
+                  <div className="flex items-center gap-4">
+                    <span className="text-white text-sm">Follow Us</span>
+
+                    <div className="flex gap-3">
+                      {[
+                        {
+                          icon: <FacebookIcon className="text-base" />,
+                          href: "#",
+                          label: "Facebook",
+                        },
+                        {
+                          icon: <TikTokIcon />,
+                          href: "https://www.tiktok.com/@nityagro.np",
+                          label: "TikTok",
+                        },
+                        {
+                          icon: <InstagramIcon />,
+                          href: "https://www.instagram.com/nityamagro.np",
+                          label: "Instagram",
+                        },
+                      ].map(({ icon, href, label }) => (
+                        <a
+                          key={label}
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={label}
+                          className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-md text-[#1E2DD8] flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-300 shadow-lg"
+                        >
+                          {icon}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-white/25" />
               </div>
             </div>
           </div>
-
-          {/* Divider */}
-          <div className="border-t border-white/25" />
-
-          {/* Bottom */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-5 py-6">
-
-            <p className="text-white text-sm drop-shadow">
-              © {new Date().getFullYear()} DXN Nepal. All Rights Reserved.
-            </p>
-
-            <div className="flex items-center gap-4">
-              <span className="text-white text-sm">
-                Follow Us
-              </span>
-
-              <div className="flex gap-3">
-                {[
-                  {
-                    icon: <FacebookIcon className="text-base" />,
-                    href: "#",
-                    label: "Facebook",
-                  },
-                  {
-                    icon: <TikTokIcon />,
-                    href: "https://www.tiktok.com/@nityagro.np",
-                    label: "TikTok",
-                  },
-                  {
-                    icon: <InstagramIcon />,
-                    href: "https://www.instagram.com/nityamagro.np",
-                    label: "Instagram",
-                  },
-                ].map(({ icon, href, label }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-md text-[#00462C] flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-300 shadow-lg"
-                  >
-                    {icon}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-          </div>
-
-          <div className="border-t border-white/25" />
-
         </div>
       </div>
-    </div>
-  </div>
-</div>
-        
 
       {/* ── MOBILE BOTTOM NAV BAR (below md) ── */}
       <nav

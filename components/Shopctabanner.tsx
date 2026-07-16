@@ -16,7 +16,7 @@ export default function ShopCTABanner() {
         "
         style={{
           backgroundImage: `
-            linear-gradient(rgba(240,253,244,0.95), rgba(255,255,255,0.95)),
+            linear-gradient(rgba(240,253,244,0.90), rgba(255,255,255,0.95)),
             url('/bg.png')
           `,
           backgroundSize: "cover",
@@ -27,15 +27,15 @@ export default function ShopCTABanner() {
         {/* LEFT CONTENT */}
         <div className="relative z-10 max-w-[560px]">
           <h2
-            className="text-slate-900 font-bold text-3xl leading-tight"
+            className="text-[#1E2DD8] font-bold text-3xl leading-tight"
             style={{ fontFamily: "Roboto Slab, serif" }}
           >
             Begin Your Wellness Journey with DXN
           </h2>
 
-          <p className="mt-4 text-slate-600 text-base leading-7">
-            Subscribe today to receive exclusive offers, wellness tips,
-            and updates on authentic DXN products.
+          <p className="mt-4 text-[#000000] text-base leading-7">
+            Subscribe today to receive exclusive offers, wellness tips, and
+            updates on authentic DXN products.
           </p>
 
           {/* Email Box */}
@@ -43,15 +43,15 @@ export default function ShopCTABanner() {
             <input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 h-full px-5 text-sm text-slate-700 bg-transparent outline-none placeholder:text-slate-400"
+              className="flex-1 h-full px-5 text-sm text-[#000000] focus:text-[#1E2DD8] bg-transparent outline-none placeholder:text-slate-400 focus:placeholder:text-[#1ed891] transition-all duration-1000"
             />
 
             <button
               className="
                 h-full
                 px-8
-                bg-green-700
-                hover:bg-green-800
+                bg-[#1E2DD8]/80
+                hover:bg-[#1E2DD8]
                 text-white
                 text-sm
                 font-semibold

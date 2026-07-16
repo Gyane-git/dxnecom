@@ -65,27 +65,25 @@ function FAQRow({
         <span
           className={`text-base transition-colors ${
             isOpen
-              ? "text-green-700 font-semibold"
+              ? "text-[#1E2DD8] font-semibold"
               : "text-slate-800 font-medium"
           }`}
         >
           {item.question}
         </span>
 
-        <span className="ml-4 text-2xl text-green-700 font-light">
+        <span className="ml-4 text-2xl text-[#1E2DD8] font-light">
           {isOpen ? "−" : "+"}
         </span>
       </button>
 
       <div
         className={`grid transition-all duration-300 ${
-          isOpen
-            ? "grid-rows-[1fr] opacity-100"
-            : "grid-rows-[0fr] opacity-0"
+          isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
         }`}
       >
         <div className="overflow-hidden">
-          <p className="px-6 pb-6 text-sm leading-7 text-slate-600">
+          <p className="px-6 pb-6 text-sm leading-7 text-[#000000]">
             {item.answer}
           </p>
         </div>
@@ -120,7 +118,7 @@ export default function FAQ() {
             id: Number(item.id || item.faqsId),
             question: item.question,
             answer: item.answer || "",
-          }))
+          })),
         );
       } catch {
         // fallback
@@ -130,25 +128,22 @@ export default function FAQ() {
     loadFaqs();
   }, []);
 
-  const visibleFaqs = showAll
-    ? apiFaqs
-    : apiFaqs.slice(0, INITIAL_VISIBLE);
+  const visibleFaqs = showAll ? apiFaqs : apiFaqs.slice(0, INITIAL_VISIBLE);
 
-  const toggle = (id: number) =>
-    setOpenId((prev) => (prev === id ? null : id));
+  const toggle = (id: number) => setOpenId((prev) => (prev === id ? null : id));
 
   return (
     <section className="bg-white py-12 px-4 sm:px-8 lg:px-16">
       {/* Heading */}
       <div className="text-center mb-12">
         <h2
-          className="text-3xl lg:text-4xl font-bold text-green-700"
+          className="text-3xl lg:text-4xl font-bold text-[#1E2DD8] mb-4"
           style={{ fontFamily: "Roboto Slab" }}
         >
           Frequently Asked Questions
         </h2>
 
-        <p className="mt-3 text-slate-600 text-lg">
+        <p className="mt-3 text-[#000000] text-lg">
           Everything you need to know about DXN products and services.
         </p>
       </div>
